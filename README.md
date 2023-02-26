@@ -5,7 +5,7 @@
 ```sh
 npm install
 ```
-**Setup and running:**
+## Setup and running:
 **1. Clone this repository :**
 
 ```sh
