@@ -7,7 +7,7 @@
 **1. Clone this repository :**
 
 ```sh
-git clone --depth 1 https://github.com/Juan-Alvarado/weatherapp-boilerplate.git weather-app
+git clone https://github.com/IrfanUddin0/ECS522U-weather-app
 cd weather-app
 ```
 **2. Install Dependencies**
