@@ -8,7 +8,7 @@
 
 ```sh
 git clone https://github.com/IrfanUddin0/ECS522U-weather-app
-cd weather-app
+cd ECS522U-weather-app
 ```
 **2. Install Dependencies**
 ```sh
