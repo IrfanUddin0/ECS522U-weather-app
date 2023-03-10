@@ -2,11 +2,24 @@
 // import 'isomorphic-fetch';
 import { h, render } from 'preact';
 import './style';
+import Router from 'preact-router';
 
 let root;
+let App = require('./components/app').default;
+let Sun = require('./components/Sun/sun').default;
+let Moon = require('./components/Moon/moon').default;
+
+
+const Main = () => (
+	<Router>
+	  <App path="/" />
+	  <Sun path="/sun" />
+	  <Moon path="/moon" />
+	</Router>
+);
+
 function init() {
-	let App = require('./components/app').default;
-	root = render(<App />, document.body, root);
+	root = render(<Main />, document.body, root);
 }
 
 // register ServiceWorker via OfflinePlugin, for prod only:

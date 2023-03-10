@@ -1,6 +1,8 @@
 import { h, render, Component } from 'preact';
 import $ from 'jquery';
 
+import style from './style';
+
 class Temp extends Component{
     constructor(props){
         super(props);
@@ -15,13 +17,13 @@ class Temp extends Component{
     render()
     {
         return (
-            <p>
+            <a class={ style.temp_style }>
                 {this.state.temp ? this.state.temp : "API ERROR"}
-            </p>
+            </a>
         )
     }
 
-        	// a call to fetch weather data via wunderground
+    // a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
 		var url = "https://api.openweathermap.org/data/2.5/weather?q="+ this.state.city +"&units="+this.state.units+"&appid=42b2b12795d0e8746b90586151f0e9be";
