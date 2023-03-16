@@ -8,6 +8,7 @@ let root;
 let App = require('./components/app').default;
 let Sun = require('./components/Sun/sun').default;
 let Moon = require('./components/Moon/moon').default;
+let Time = require('./components/Time/time').default;
 
 
 const Main = () => (
@@ -15,6 +16,7 @@ const Main = () => (
 	  <App path="/" />
 	  <Sun path="/sun" />
 	  <Moon path="/moon" />
+	  <Time path="/time" />
 	</Router>
 );
 

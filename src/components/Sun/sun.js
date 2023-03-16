@@ -2,7 +2,8 @@ import {h, Component } from 'preact';
 import style from './sunStyle';
 import $ from 'jquery';
 
-import Temp from '../WeatherData/Temp'
+//import Temp from '../WeatherData/Temp'
+import TempSingle from '../WeatherData/Temp'
 import Button from '../Button/Button'
 
 import { route } from 'preact-router';
@@ -12,6 +13,7 @@ export default class Sun extends Component {
 		super(props);
 		this.state.city = 'London'
 		this.state.units = 'metric'
+		TempSingle.debug()
 	}
 
 
@@ -24,11 +26,12 @@ export default class Sun extends Component {
         </div>
 				<div class={ style.content }>
 					<p class={ style.city_text }>{this.state.city}</p>
-					<Temp city={this.state.city} units={this.state.units}/><a class={style.unit}>°{this.state.units=='metric' ? 'C' : "F"}</a>
+					<Button text="Home Page" pointer={()=>route('/')}/>
 				</div>
-        <Button text="Home Page" pointer={()=>route('/index')}/>
 			</div>
 		);
 	}
 
 }
+//<Temp city={this.state.city} units={this.state.units}/><a class={style.unit}>°{this.state.units=='metric' ? 'C' : "F"}</a>
+					

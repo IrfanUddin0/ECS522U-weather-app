@@ -1,5 +1,5 @@
 .container {
-	display: flex;
+    display: flex;
 	flex-direction: column;
 	background: url('../../assets/backgrounds/home_bg.jpeg');
     background-repeat:repeat;
@@ -17,6 +17,16 @@
     height: 100%;
 }
 
+.temp_style{
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    font-weight: bolder;
+    font-size: 80px;
+    text-align: left;
+    text-shadow: 5px 5px 5px rgb(15, 15, 15);
+}
+
 .unit{
     color: black;
     display: inline;
@@ -28,4 +38,120 @@
     color: black;
     font-weight: bolder;
     font-size: larger;
+}
+
+.info{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 15px;
+}
+
+
+.sunrise{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 15px;
+}
+
+.sunset{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 15px;
+}
+
+.clarity{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 15px;
+}
+
+.rain{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 15px;
+}
+
+.visibility{
+    border-color: black;
+    border-radius: 5px;
+    background-color: rgba(45, 43, 43, 0.51);
+    height: 20px;
+    width: 5px;
+    font-size: 7px;
+    font-style: oblique;
+    padding: 10px;
+    text-align: center;
+
+}
+
+.humidity{
+    background-color: rgba(45, 43, 43, 0.51);
+    height: 20px;
+    width: 5px;
+    border-color: black;
+    border-radius: 5px;
+    font-size: 7px;
+    font-style: oblique;
+    padding: 10px;
+    text-align: center;
+}
+
+.pressure{
+    background-color: rgba(45, 43, 43, 0.51);
+    border-color: black;
+    height: 20px;
+    width: 5px;
+    border-radius: 5px;
+    font-size: 7px;
+    font-style: oblique;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.details{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 24px;
+   
+}
+
+.weatherDetails{
+    top: 8px;
+    display: flex;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+.forecast{
+    display: flex;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+.forecast> p{
+    color: white;
+    font-weight: bolder;
+}
+
+.cloud_icon{
+    width: 100px;
+    height: 100px;
+    content:url(../../assets/icons/clarityicon.png);
+}
+
+.rain_icon{
+    width: 100px;
+    height: 100px;
+    content:url(../../assets/icons/rainicon.png);
 }

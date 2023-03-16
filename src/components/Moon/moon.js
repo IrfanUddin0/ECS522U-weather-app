@@ -25,8 +25,8 @@ export default class Moon extends Component {
 				<div class={ style.content }>
 					<p class={ style.city_text }>{this.state.city}</p>
 					<Temp city={this.state.city} units={this.state.units}/><a class={style.unit}>°{this.state.units=='metric' ? 'C' : "F"}</a>
+					<Button text="Home Page" pointer={()=>route('/')}/>
 				</div>
-        <Button text="Home Page" pointer={()=>route('/index')}/>
 			</div>
 		);
 	}
