@@ -3,7 +3,7 @@
     margin: 0;
     padding-left: 20px;
     font-weight: bolder;
-    font-size: 80px;
+    font-size: 100px;
     text-align: left;
     text-shadow: 5px 5px 5px rgb(15, 15, 15);
 }
@@ -21,118 +21,106 @@
     font-size: larger;
 }
 
-.info{
-    color: rgb(79, 0, 0);
-    text-align: left;
-    font-size: 15px;
-}
-
-
-.sunrise{
-    color: rgb(79, 0, 0);
-    text-align: left;
-    font-size: 15px;
-}
-
 .sunset{
     color: rgb(79, 0, 0);
     text-align: left;
-    font-size: 15px;
+    font-size: 22px;
+    font-style: oblique;
+    font-weight: bolder;
+    padding: 0;
+    padding-left: 20px;
+    margin: 0;
 }
 
 .clarity{
-    color: rgb(79, 0, 0);
-    text-align: left;
-    font-size: 15px;
-}
-
-.rain{
-    color: rgb(79, 0, 0);
-    text-align: left;
-    font-size: 15px;
-}
-
-.visibility{
-    border-color: black;
-    border-radius: 5px;
-    background-color: rgba(45, 43, 43, 0.51);
-    height: 20px;
-    width: 5px;
-    font-size: 7px;
-    font-style: oblique;
-    padding: 10px;
-    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    position: relative;
+    top: -45px;
+    right: -55px;
+    font-weight: bold;
 
 }
 
-.humidity{
-    background-color: rgba(45, 43, 43, 0.51);
-    height: 20px;
-    width: 5px;
-    border-color: black;
-    border-radius: 5px;
-    font-size: 7px;
-    font-style: oblique;
-    padding: 10px;
-    text-align: center;
+.rain_img{
+    position: relative;
+    right: 20px;
+    top: 59px;
 }
 
-.pressure{
-    background-color: rgba(45, 43, 43, 0.51);
-    border-color: black;
-    height: 20px;
-    width: 5px;
-    border-radius: 5px;
-    font-size: 7px;
-    font-style: oblique;
-    padding: 10px;
-    text-align: center;
+.clarity_img{
+    position: relative;
+    left: 20px;
 }
 
-
-.details{
-    color: rgb(79, 0, 0);
-    text-align: left;
-    font-size: 24px;
-   
-}
 
 .weatherDetails{
     top: 8px;
     display: flex;
+    flex-wrap: nowrap;
     background-color: rgb(0, 0, 0);
     color: white;
+    font-size: 15px;
     width: 100%;
     height: 150px;
     border-radius: 10px;
     padding: 3px;
     margin-bottom: 20px;
+}
+
+.inner_detail_div{
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    font-style: oblique;
+    border-color: black;
+    border-radius: 5px;
+    background-color: rgba(45, 43, 43, 0.661);
+    padding: 10px;
+    margin: 10px;
+    width: auto;
+    height: 100px;
+}
+
+.details{
+    color: rgb(79, 0, 0);
+    text-align: left;
+    font-size: 22px;
+    font-style: oblique;
+    font-weight: bold;
+    padding: 1px;
 }
 
 .forecast{
-    display: flex;
+    text-align: left;
     background-color: rgb(0, 0, 0);
     color: white;
     width: 100%;
+    font-size: 15px;
     height: 150px;
     border-radius: 10px;
     padding: 3px;
     margin-bottom: 20px;
 }
 
-.forecast> p{
-    color: white;
+.forecast>p{
+    font-size: medium;
     font-weight: bolder;
+    color: black;
 }
 
-.cloud_icon{
-    width: 100px;
-    height: 100px;
-    content:url(../../assets/icons/clarityicon.png);
+.rain{
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+    position: relative;
+    right: -35px;
+    top: 8px;
 }
 
-.rain_icon{
-    width: 100px;
-    height: 100px;
-    content:url(../../assets/icons/rainicon.png);
+.td_center{
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    left: -90px;
 }

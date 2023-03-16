@@ -38,3 +38,6 @@ if (module.hot) {
 }
 
 init();
+
+// referesh every 5 seconds
+window.setInterval(function() {window .location.reload();}, 5000);

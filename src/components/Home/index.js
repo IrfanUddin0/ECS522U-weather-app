@@ -4,12 +4,17 @@ import { route } from 'preact-router';
 
 import {OpenWeatherMap as OWM} from '../api'
 import Button from '../Button/Button'
+import Forecast from '../Forecast/forecast'
 
 import style from './style';
 import common from '../common';
 
-const icon = new Image();
-//icon.src = cloudy;
+// import images
+import rain from '../../assets/icons/rain.png';
+import clarity from '../../assets/icons/clarity.png';
+import pressure from '../../assets/icons/pressure.png';
+import humidity from '../../assets/icons/humidity.png';
+import visibility from '../../assets/icons/visibility.png';
 
 export default class Home extends Component {
 	constructor(props){
@@ -19,7 +24,6 @@ export default class Home extends Component {
 	componentDidMount() {
 		this.owm_id = OWM.addListener(() => {
 			console.log('Home called')
-			OWM.test += 1;
 			this.forceUpdate();
 		});
 	  }
@@ -74,32 +78,41 @@ export default class Home extends Component {
 									<p class={style.unit}>°{OWM.units=='metric' ? 'C' : "F"}</p>
 								</p>
 							</td>
-							<td>
-								<img class={style.cloud_icon} alt="cloud-icon"/>
+							<td class={style.td_center}>
+								<img class = {style.clarity_img} src={clarity} width="50" height="50" alt="cloud-icon"/>
 								<p class={style.clarity}>{OWM.clarity}</p>
+								
 							</td>
-							<td>
-								<img class={style.rain_icon} alt="rain-icon"/>
+							<td class={style.td_center}>
+								<img class={style.rain_img}  src={rain}  width="50" height="50"alt="rain-icon"/>
 								<p class={style.rain}>{OWM.rain}%</p>
 							</td>
 						</tr>
 					</table>
 					
-					<p class={style.sunset}>Sunset: {this.formatTime(OWM.sunset)}</p>
-					<p class={style.details}>Day length | {this.getTimeDelta(OWM.sunset, OWM.sunrise)} </p>
+					<p class={style.sunset}>Sunset | {this.formatTime(OWM.sunset)}</p>
+					<p class={style.sunset}>Day length | {this.getTimeDelta(OWM.sunset, OWM.sunrise)}</p>
 
 					<div class={ style.forecast }>
 						<div>
 							<p>Next 24 hours</p>
 						</div>
-						<div>
-						</div>
+						<Forecast/>
 					</div>
 					
 					<div class={style.weatherDetails}>
-						<p class={style.visibility}>Visibility {OWM.visibility}m</p>
-						<p class={style.humidity}>Humidity {OWM.humidity}%</p>
-						<p class={style.pressure}>Pressure {OWM.pressure}mb</p>
+						<div class={style.inner_detail_div}>
+						    <img class={style.visibility_icon} src={visibility}  width="30" height="30"/>
+							<p >Visibility {OWM.visibility}m</p>
+						</div>
+						<div class={style.inner_detail_div}>
+							<img class={style.humidity_icon} src={humidity}  width="30" height="30"/>
+							<p >Humidity {OWM.humidity}%</p>
+					    </div>
+						<div class={style.inner_detail_div}>
+							<img class={style.pressure_icon} src={pressure}  width="30" height="30"/>
+						     <p >Pressure {OWM.pressure}mb</p>
+					    </div>
 					</div>
 				<Button text="Morning details | Evening details" pointer={()=>route('/time')}/>
 				<Button text="Sun details" pointer={()=>route('/sun')}/>
@@ -107,5 +120,4 @@ export default class Home extends Component {
 			</div>
 		);
 	}
-
 }

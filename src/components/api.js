@@ -4,9 +4,10 @@ export const WAIT_INTERVAL = 1* 60 * 1000;
 
 export const OpenWeatherMap = {
 
-	test: 0,
 	city: 'London',
 	units: 'metric',
+	rain: 'Unknown',
+	forecast: [], // stores a list of {time, temp, main}
 	listeners: [],
 
 
@@ -34,6 +35,7 @@ export const OpenWeatherMap = {
     // a call to fetch weather data via wunderground
 	fetchWeatherData() {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
+		// current weather
 		var url = "https://api.openweathermap.org/data/2.5/weather?q="+ this.city +"&units="+this.units+"&appid=42b2b12795d0e8746b90586151f0e9be";
 		$.ajax({
 			url: url,
@@ -41,6 +43,14 @@ export const OpenWeatherMap = {
 			success : (parsed) => this.parseResponse(parsed),
 			error : function(req, err){console.log('API call failed: ' + err);}
 		})
+
+		this.forecast = [];
+		// forcast request
+		var json = require("./forecast.json");
+		for (let i = 0; i < json['list'].length; i++)
+		{
+			this.forecast.push({time: json['list'][i]['dt'], temp:json['list'][i]['main']['temp'], main:json['list'][i]['weather'][0]['main']});
+		}
 	},
 
     parseResponse(parsed_json) {
