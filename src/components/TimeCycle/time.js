@@ -8,14 +8,14 @@ import { route } from 'preact-router';
 import common from '../common.less'
 import TempBanner from '../TempBanner/TempBanner';
 
-export default class Sun extends Component {
+export default class TimeCycle extends Component {
 	constructor(props){
 		super(props);
 	}
 
 	componentDidMount() {
 		this.owm_id = OWM.addListener(() => {
-			console.log('Sun called')
+			console.log('Morning/Evening called')
 			this.forceUpdate();
 		});
 	  }
@@ -35,4 +35,3 @@ export default class Sun extends Component {
 	}
 
 }
-					

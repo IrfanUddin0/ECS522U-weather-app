@@ -3,12 +3,13 @@
 import { h, render } from 'preact';
 import './style';
 import Router from 'preact-router';
+import {OpenWeatherMap as OWM} from 'components/api';
 
 let root;
 let App = require('./components/app').default;
 let Sun = require('./components/Sun/sun').default;
 let Moon = require('./components/Moon/moon').default;
-let Time = require('./components/Time/time').default;
+let TimeCycle = require('./components/TimeCycle/time').default;
 
 
 const Main = () => (
@@ -16,11 +17,12 @@ const Main = () => (
 	  <App path="/" />
 	  <Sun path="/sun" />
 	  <Moon path="/moon" />
-	  <Time path="/time" />
+	  <TimeCycle path="/time" />
 	</Router>
 );
 
 function init() {
+	OWM.init();
 	root = render(<Main />, document.body, root);
 }
 

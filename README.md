@@ -10,7 +10,7 @@
 git clone https://github.com/IrfanUddin0/ECS522U-weather-app
 cd ECS522U-weather-app
 ```
-**2. Install Dependencies**
+**2. Install Dependencies**  
 We installed `preact-router`
 ```sh
 npm install
