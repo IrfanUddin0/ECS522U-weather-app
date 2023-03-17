@@ -4,10 +4,9 @@ import { route } from 'preact-router';
 
 import {OpenWeatherMap as OWM} from '../api'
 import Button from '../Button/Button'
-import Forecast from '../Forecast/forecast'
+import Forecast from './forecast'
 
-import style from './style';
-import common from '../common';
+import style from './homeStyle';
 
 // import images
 import rain from '../../assets/icons/rain.png';
@@ -32,54 +31,23 @@ export default class Home extends Component {
 		console.log('Home unmounted', OWM.listeners)
 	}
 
-	formatTime(timeStr) {
-        const time = new Date(timeStr * 1000);
-
-        let hours = time.getHours();
-        let minutes = time.getMinutes();
-
-        // Add leading zero to single-digit minutes
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-
-        // Determine AM/PM
-        let ampm = "AM";
-        if (hours > 12) {
-            hours -= 12;
-            ampm = "PM";
-        }
-
-        // Format time string
-        const formattedTime = `${hours}:${minutes} ${ampm}`;
-
-        return formattedTime;
-    }
-
-	getTimeDelta(time1, time2) {
-		let diff = new Date(time1).getTime() - new Date(time2).getTime();
-		let hours = Math.floor(diff / 3600);
-		let minutes = Math.floor((diff % 3600) / 60);
-
-		return hours + "h " + minutes + "m";
-	}
-
 	// the main render method for the iphone component
 	render() {
 		return (
-			<div class={common.container}>
-					<p class={ style.city_text }>{OWM.city}</p>
+			<div class={style.container}>
+					<p class={style.city_text}>{OWM.city}</p>
 					<table>
 						<tr>
 							<td>
 								{ /*html for temp */}
-								<p class={ style.temp_style }>
+								<p class={style.temperature}>
 									{Math.round(OWM.temp)}
-									<p class={style.unit}>°{OWM.units=='metric' ? 'C' : "F"}</p>
+									<p class={style.temp_unit}>°{OWM.getDegreeUnit()}</p>
 								</p>
 							</td>
 							<td class={style.td_center}>
-								<img class = {style.clarity_img} src={clarity} width="50" height="50" alt="cloud-icon"/>
+								{console.log(clarity)}
+								<img class={style.clarity_img} src={clarity} width="50" height="50" alt="cloud-icon"/>
 								<p class={style.clarity}>{OWM.clarity}</p>
 								
 							</td>
@@ -119,5 +87,37 @@ export default class Home extends Component {
 				<Button text="Moon cycle" pointer={()=>route('/moon')}/>
 			</div>
 		);
+	}
+
+	formatTime(timeStr) {
+        const time = new Date(timeStr * 1000);
+
+        let hours = time.getHours();
+        let minutes = time.getMinutes();
+
+        // Add leading zero to single-digit minutes
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        // Determine AM/PM
+        let ampm = "AM";
+        if (hours > 12) {
+            hours -= 12;
+            ampm = "PM";
+        }
+
+        // Format time string
+        const formattedTime = `${hours}:${minutes} ${ampm}`;
+
+        return formattedTime;
+    }
+
+	getTimeDelta(time1, time2) {
+		let diff = new Date(time1).getTime() - new Date(time2).getTime();
+		let hours = Math.floor(diff / 3600);
+		let minutes = Math.floor((diff % 3600) / 60);
+
+		return hours + "h " + minutes + "m";
 	}
 }

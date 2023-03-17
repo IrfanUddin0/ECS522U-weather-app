@@ -1,7 +1,5 @@
 import $ from 'jquery';
 
-export const WAIT_INTERVAL = 1* 60 * 1000;
-
 export const OpenWeatherMap = {
 
 	city: 'London',
@@ -10,14 +8,13 @@ export const OpenWeatherMap = {
 	forecast: [], // stores a list of {time, temp, main}
 	listeners: [],
 
-
 	init() {
 		this.fetchWeatherData();
-		setInterval(() => this.fetchWeatherData(), WAIT_INTERVAL);
+		setInterval(() => this.fetchWeatherData(), 1* 60 * 1000);
 	},
 
 	addListener(f) {
-		let id = this.listeners.length;
+		var id = this.listeners.length;
 		this.listeners.push(f);
 		return id;
 	},
@@ -32,6 +29,10 @@ export const OpenWeatherMap = {
         };
 	},
 
+	getDegreeUnit() {
+		return this.units === 'metric' ? 'C' : 'F';
+	},
+
     // a call to fetch weather data via wunderground
 	fetchWeatherData() {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
@@ -44,12 +45,17 @@ export const OpenWeatherMap = {
 			error : function(req, err){console.log('API call failed: ' + err);}
 		})
 
-		this.forecast = [];
 		// forcast request
+		this.forecast = [];
 		var json = require("./forecast.json");
-		for (let i = 0; i < json['list'].length; i++)
+		var forecast_len = Math.min(7, json['list'].length) // We only need at most 7 elements
+		for (let i = 0; i < forecast_len; i++)
 		{
-			this.forecast.push({time: json['list'][i]['dt'], temp:json['list'][i]['main']['temp'], main:json['list'][i]['weather'][0]['main']});
+			this.forecast.push({
+				time: json['list'][i]['dt'],
+				temp: json['list'][i]['main']['temp'],
+				main: json['list'][i]['weather'][0]['main']
+			});
 		}
 	},
 
