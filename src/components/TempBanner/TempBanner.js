@@ -3,6 +3,7 @@ import {h, Component } from 'preact';
 import {OpenWeatherMap as OWM} from '../api'
 
 import style from './TempBannerStyle'
+import common from '../common'
 
 export default class TempBanner extends Component {
     constructor(props){
@@ -22,13 +23,17 @@ export default class TempBanner extends Component {
     render() {
         return (
 			<div>
-		  		<p>{OWM.test}</p>
-				<p class={style.city_text}>{OWM.city}</p>
+				<p class={common.city_text}>{OWM.city}</p>
 
-				<p class={style.temperature}>
-					{Math.round(OWM.temp)}
-					<p class={style.temp_unit}>°{OWM.getDegreeUnit()}</p>
-				</p>
+				<div class={style.banner}>
+					<p class={style.temperature}>
+						{Math.round(OWM.temp)}
+						<p class={style.temp_unit}>°{OWM.getDegreeUnit()}</p>
+					</p>
+					
+					<p class={style.clarity}> | {OWM.clarity}</p>
+				</div>
+				
 			</div>
 		);
     }

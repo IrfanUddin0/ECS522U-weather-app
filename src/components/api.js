@@ -5,7 +5,7 @@ export const OpenWeatherMap = {
 	city: 'London',
 	units: 'metric',
 	rain: 'Unknown',
-	forecast: [], // stores a list of {time, temp, main}
+	forecast: [], // stores a list of {time, temp, main, prob}
 	listeners: [],
 
 	init() {
@@ -54,7 +54,8 @@ export const OpenWeatherMap = {
 			this.forecast.push({
 				time: json['list'][i]['dt'],
 				temp: json['list'][i]['main']['temp'],
-				main: json['list'][i]['weather'][0]['main']
+				main: json['list'][i]['weather'][0]['main'],
+				prob: json['list'][i]['pop']
 			});
 		}
 	},

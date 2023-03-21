@@ -2,12 +2,33 @@
     background-color: rgba(45, 43, 43, 0.661);
     border-radius: 10px;
     width: 14.2%;
-    height: 80px;
+    height: 120px;
     margin: 5px;
     text-align: center;
     justify-content: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .forecast_outer{
     display: flex;
+}
+.forecast_outer>div{
+    padding: 2%;
+}
+
+.temp{
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.prob{
+    color: rgb(0, 166, 255);
+    font-weight: 1000;
+    font-size: 11px;
+}
+
+.time{
+    color: rgb(162, 162, 162);
+    font-size: 15px;
 }
