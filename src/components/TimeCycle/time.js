@@ -32,12 +32,6 @@ export default class TimeCycle extends Component {
 		return (
 			<div class={common.container}>
 				<TempBanner />
-				<div style='background: black'>
-					{util.formatTime(OWM.sunrise)}
-				</div>	
-				<div style='background: black'>
-					{util.formatTime(OWM.sunset)}
-				</div>
 
 				<div class={common.box}>
 					<div class={style.detail_container}>
