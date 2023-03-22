@@ -35,22 +35,30 @@ export default class TimeCycle extends Component {
 
 				<div class={common.box}>
 					<div class={style.detail_container}>
-						<p class={style.morning_title}>Morning</p>
+						<p class={style.title}>Morning</p>
 						<table class={style.detail_table}>
 							<tr>
-								<td class={style.morningDetails}>
-									<ul>
-										<li>Blue Hour</li>
-										<li>Sunrise</li>
-										<li>Solar Noon</li>
-									</ul>
-								</td>
 								<td>
-									<ul class={style.right_details}>
-										<li>Blue Hour</li>
-										<li>{util.formatTime(OWM.sunrise)}</li>
-										<li>Solar Noon</li>
-									</ul>
+									<p class={style.left_morning_details}>Blue Hour</p>
+								</td>
+								<td class={style.right_details}>
+									<p>{util.formatTime(OWM.sunrise-2400)} - {util.formatTime(OWM.sunrise-1200)}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class={style.left_morning_details}>Sunrise</p>
+								</td>
+								<td class={style.right_details}>
+									<p>{util.formatTime(OWM.sunrise)}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class={style.left_morning_details}>Solar Noon</p>
+								</td>
+								<td class={style.right_details}>
+									<p>{util.formatTime(OWM.sunrise + (Math.abs(OWM.sunset-OWM.sunrise))/2)}</p>
 								</td>
 							</tr>
 						</table>
@@ -58,22 +66,22 @@ export default class TimeCycle extends Component {
 				</div>
 				<div class={common.box}>
 					<div class={style.detail_container}>
-						<p>Evening</p>
+						<p class={style.title}>Evening</p>
 						<table class={style.detail_table}>
 							<tr>
-								<td class={style.morningDetails}>
-									<ul>
-										<li>Golden Hour</li>
-										<li>Sunset</li>
-										<li>Blue Hour</li>
-									</ul>
-								</td>
 								<td>
-									<ul class={style.right_details}>
-										<li>{util.formatTime(OWM.sunset-3660)} - {util.formatTime(OWM.sunset)}</li>
-										<li>{util.formatTime(OWM.sunset)}</li>
-										<li>{util.formatTime(OWM.sunrise-2400)} - {util.formatTime(OWM.sunrise-1200)}</li>
-									</ul>
+									<p class={style.left_evening_details}>Golden Hour</p>
+								</td>
+								<td class={style.right_details}>
+									<p>{util.formatTime(OWM.sunset-3660)} - {util.formatTime(OWM.sunset)}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class={style.left_evening_details}>Sunset</p>
+								</td>
+								<td class={style.right_details}>
+									<p>{util.formatTime(OWM.sunset)}</p>
 								</td>
 							</tr>
 						</table>
