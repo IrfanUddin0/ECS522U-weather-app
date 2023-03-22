@@ -12,8 +12,8 @@ export default class util{
     
         // Determine AM/PM
         let ampm = "AM";
-        if (hours > 12) {
-            hours -= 12;
+        if (hours >= 12) {
+            if(hours!=12){hours -= 12;}
             ampm = "PM";
         }
     
