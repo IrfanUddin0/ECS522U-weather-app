@@ -46,9 +46,13 @@ export const OpenWeatherMap = {
 		})
 
 		// forcast request
+		// maybe use geolocation?
 		this.forecast = [];
-		var json = require("./forecast.json");
-		var forecast_len = Math.min(7, json['list'].length) // We only need at most 7 elements
+		url = "http://api.openweathermap.org/data/2.5/forecast?lat=51.50&lon=0.00&units="+this.units+"&appid=42b2b12795d0e8746b90586151f0e9be";
+		
+		// load from file for testing
+		/*var json = require("./forecast.json");
+		var forecast_len = Math.min(6, json['list'].length) // We only need at most 6 elements
 		for (let i = 0; i < forecast_len; i++)
 		{
 			this.forecast.push({
@@ -58,7 +62,16 @@ export const OpenWeatherMap = {
 				prob: json['list'][i]['pop']
 			});
 		}
+		*/
+		$.ajax({
+			url: url,
+			dataType: "jsonp",
+			success : (parsed) => this.parseForecast(parsed),
+			error : function(req, err){console.log('API call failed: ' + err);}
+		})
 	},
+
+	// store API data in local variables to be used across the many pages
 
     parseResponse(parsed_json) {
 		var location = parsed_json['name'];
@@ -87,6 +100,21 @@ export const OpenWeatherMap = {
 		this.visibility = visibility;
 		this.humidity = humidity;
 		this.pressure = pressure;
+
+		this.refreshListeners();
+	},
+
+	parseForecast(json){
+		var forecast_len = Math.min(6, json['list'].length) // We only need at most 6 elements
+		for (let i = 0; i < forecast_len; i++)
+		{
+			this.forecast.push({
+				time: json['list'][i]['dt'],
+				temp: json['list'][i]['main']['temp'],
+				main: json['list'][i]['weather'][0]['main'],
+				prob: json['list'][i]['pop']
+			});
+		}
 
 		this.refreshListeners();
 	}

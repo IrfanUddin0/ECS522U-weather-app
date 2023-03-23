@@ -11,9 +11,12 @@ import util from '../util.js'
 // import images
 import rain from '../../assets/icons/rain.png';
 import clarity from '../../assets/icons/clarity.png';
+import rainy from '../../assets/icons/rainy_day.png'
 import pressure from '../../assets/icons/pressure.png';
 import humidity from '../../assets/icons/humidity.png';
 import visibility from '../../assets/icons/visibility.png';
+import sun from '../../assets/icons/sunny_day.png';
+import wind from '../../assets/icons/sunny_day.png';
 
 export default class Home extends Component {
 	constructor(props){
@@ -22,16 +25,14 @@ export default class Home extends Component {
 
 	componentDidMount() {
 		this.owm_id = OWM.addListener(() => {
-			console.log('Home called')
 			this.forceUpdate();
 		});
 	  }
 	componentWillUnmount() {
 		OWM.removeListener(this.owm_id);
-		console.log('Home unmounted', OWM.listeners)
 	}
 
-	// the main render method for the iphone component
+	// the main render method for the home page component
 	render() {
 		return (
 			<div class={style.container}>
@@ -46,7 +47,7 @@ export default class Home extends Component {
 								</p>
 							</td>
 							<td class={style.td_center}>
-								<img class={style.clarity_img} src={clarity} width="50" height="50" alt="cloud-icon"/>
+								{this.renderCurrentWeatherImage()}
 								<p class={style.clarity}>{OWM.clarity}</p>
 								
 							</td>
@@ -68,6 +69,8 @@ export default class Home extends Component {
 						<Forecast/>
 					</div>
 					
+					{/*// displays the values for the visibility, humidity and pressure*/}
+
 					<div class={style.weatherDetails}>
 						<div class={style.inner_detail_div}>
 						    <img src={visibility}  width="30" height="30"/>
@@ -85,10 +88,26 @@ export default class Home extends Component {
 							<p class={style.value}>{OWM.pressure}mb</p>
 					    </div>
 					</div>
+
+				{/* button prompts for switching pages*/}
+
 				<Button text="Morning details | Evening details" pointer={()=>route('/time')}/>
 				<Button text="Sun details" pointer={()=>route('/sun')}/>
 				<Button text="Moon cycle" pointer={()=>route('/moon')}/>
 			</div>
 		);
+	}
+
+	renderCurrentWeatherImage()
+	{
+		switch(OWM.desc)
+		{
+			default:
+				return <img class={style.clarity_img} src={clarity} width="50" height="50" alt="cloud-icon"/>
+			case "Rain":
+				return <img class={style.clarity_img} src={rainy} style={{filter: "brightness(0) contrast(100)"}} width="50" height="50" alt="cloud-icon"/>
+			case "Sun":
+				return <img class={style.clarity_img} src={clarity} style={{filter: "brightness(0) contrast(100)"}} width="50" height="50" alt="cloud-icon"/>
+		}
 	}
 }

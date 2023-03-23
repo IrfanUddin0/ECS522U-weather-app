@@ -15,7 +15,6 @@ export default class Forecast extends Component{
     }
 
 	componentDidMount() {
-        console.log('Forecast loaded');
 		this.interval = setInterval(() => {
             this.forceUpdate();
         }, 3 * 60 * 60 * 1000); // Weather forecast only updates every 3 hours
@@ -40,6 +39,7 @@ export default class Forecast extends Component{
                             </div>
                             <div>
                                 {(() => {
+                                    // switches icons depending on the type of weather currently occuring 
                                     switch(item.main){
                                         default:
                                             return <img src={cloudy}  width="40" height="40"alt="cloud-icon"/>

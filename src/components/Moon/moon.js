@@ -1,157 +1,140 @@
 import { h, Component } from 'preact';
 import $ from 'jquery';
 import { route } from 'preact-router';
-import { OpenWeatherMap as OWM } from '../api';
 import Button from '../Button/Button';
 import common from '../common.less';
 import style from './moon.less';
 import TempBanner from '../TempBanner/TempBanner';
 import 'regenerator-runtime/runtime';
-
+import { getLunarPhase, toEmoji } from './lunarphase.js';
 
 class Calendar extends Component {
 
+  // displays entire week cycle for moon
   constructor(props) {
     super(props);
-    const today = new Date();
-    this.state = {
-      month: today.getMonth(),
-      year: today.getFullYear(),
-      daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      moonPhases: {},
-    };
-  }
-
-  componentDidMount() {
+    this.moon = props.moon;
+    var today = new Date();
+    this.month = today.getMonth();
+    this.year = today.getFullYear();
+    this.moonPhases = [];
     this.fetchMoonPhases();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.month !== this.state.month || prevState.year !== this.state.year) {
-      this.fetchMoonPhases();
-    }
-  }
-
-  fetchMoonPhases = async () => {
-    const { month, year } = this.state;
-    const url = 'https://aa.usno.navy.mil/api/moon/phases/date?date=2023-03-01&nump=31';
-	$.getJSON('https://aa.usno.navy.mil/api/moon/phases/date?date=2023-03-01&nump=31', function(data){
-		console.log(data);
-	});
-    const response = await fetch(url);
-    const data = await response.json();
-    const moonPhases = {};
-    data.phasedata.forEach((phase) => {
-      moonPhases[new Date(phase.date).getDate()] = phase.phase;
+  // API data for moon cycles including API link
+  fetchMoonPhases = () => {
+    const ref = this;
+    const phaseNames = ['New Moon', 'First Quarter', 'Full Moon', 'Last Quarter']
+    $.getJSON(`https://craigchamberlain.github.io/moon-data/api/moon-phase-data/${this.year}/`, function (data) {
+      ref.moonPhases = [];
+      for (const phase of data) {
+        const date = new Date(Date.parse(phase.Date))
+        ref.moonPhases.push({
+          time: date,
+          phase: phaseNames[phase.Phase]
+        })
+      }
+      ref.forceUpdate();
     });
-    this.setState({ moonPhases });
-  };
-
-  getDaysInMonth = () => {
-    const { month, year } = this.state;
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDay = new Date(year, month, 1).getDay();
-    const days = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(new Date(year, month, i));
-    }
-    for (let i = 0; i < firstDay; i++) {
-      days.unshift(null);
-    }
-    return days;
   };
 
   prevMonth = () => {
-    const { month, year } = this.state;
-    if (month === 0) {
-      this.setState({
-        month: 11,
-        year: year - 1,
-      });
+    if (this.month === 0) {
+      this.month = 11;
+      this.year -= 1;
+      this.fetchMoonPhases();
     } else {
-      this.setState({
-        month: month - 1,
-      });
+      this.month -= 1;
+      this.moon.forceUpdate();
     }
   };
 
+  // get moon cycle for next month
   nextMonth = () => {
-    const { month, year } = this.state;
-    if (month === 11) {
-      this.setState({
-        month: 0,
-        year: year + 1,
-      });
+    if (this.month === 11) {
+      this.month = 0;
+      this.year += 1;
+      this.fetchMoonPhases();
     } else {
-      this.setState({
-        month: month + 1,
-      });
+      this.month += 1;
+      this.moon.forceUpdate();
     }
   };
 
-  selectDate = (date) => {
-    console.log(date);
-  };
+  getRelevantPhases = () => {
+    var start = 0;
+    var stop = this.moonPhases.length;
+    for (let i = 0; i < stop; i++) {
+      var month = this.moonPhases[i].time.getMonth();
+      if (month < this.month) continue;
+      if (month === this.month) start += 1;
+      else if (month > this.month) {
+        stop = i;
+        break;
+      }
+    }
+    return this.moonPhases.slice(stop - start, stop);
+  }
 
   render() {
-    const { month, year, daysOfWeek, moonPhases } = this.state;
-    const daysInMonth = this.getDaysInMonth();
     return (
       <div>
-        <h2>{`${month + 1}/${year}`}</h2>
-        <button onClick={this.prevMonth}>{'<'}</button>
-        <button onClick={this.nextMonth}>{'>'}</button>
-        <table>
-			<thead>
-				<tr>
-				{daysOfWeek.map((day) => (
-					<th key={day}>{day}</th>
-				))}
-				</tr>
-			</thead>	
-		</table>
-			<tbody>
-			{/*	
-			{daysInMonth.map((day, index) => (
-					<td key={index} className={day ? 'active' : ''} onClick={() => day && this.selectDate(day)}>
-						{day ? day.getDate() : ''}
-						{moonPhases[day?.getDate()]}
-					</td>
-				))}
-			*/}
-			</tbody>
-	  </div>
-  	)}
+        <div class={style.calendar}>
+          <div class={style.top_calendar}>
+            <button onClick={this.prevMonth}>{'<'}</button>
+            <div>{this.month + 1}/{this.year}</div>
+            <button onClick={this.nextMonth}>{'>'}</button>
+          </div>
+          <div>
+            <div class={style.moon_table}>
+              <div class={style.days_top}>
+                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+              </div>
+              <div class={style.days_container}>
+                {this.renderDays()}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class={common.box}>
+          {this.getRelevantPhases().map(phase => {
+            return (
+              <div>
+                <p class={style.phaseStyle}>{phase.phase}: {phase.time.toDateString()}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
+  renderDays() {
+    let days = Array(35).fill(<div class={style.day}><img /></div>); // default box for a day
+    let first = new Date(this.year, this.month, 1).getDay();
+    let days_in_month = new Date(this.year, this.month + 1, 0).getDate();
+    for (let i = first; i < days_in_month + first; i++) { // loop for each day of the month (i-first+1 = day)
+      let day = new Date(this.year, this.month, i - first + 1);
+      let phase = getLunarPhase(day);
+      days[i] = <div class={style.day}>{i - first + 1}<div>{toEmoji[phase]}</div></div>;
+    }
+    return days
+  }
 }
-                    
+
 export default class Moon extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.owm_id = OWM.addListener(() => {
-      console.log('Moon called');
-      this.forceUpdate();
-    });
-  }
-
-  componentWillUnmount() {
-    OWM.removeListener(this.owm_id);
-  }
-
-  selectDate = (date) => {
-    console.log(date);
   }
 
   render() {
     return (
       <div class={common.container}>
         <TempBanner />
+        <Calendar class={style.calendar} moon={this} />
         <Button text="Home Page" pointer={() => route('/')} />
-        <Calendar class={style.calendar} selectDate={this.selectDate} />
       </div>
     );
   }
 }
+
